@@ -1,0 +1,116 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+  <head th:include="fragments/header :: mainheader ('levap.ru - личная фотогалерея Павла Гололобова','Pavel V. Gololobov (Павел Гололобов) - личная фотогалерея: природа, портрет, репортаж, макро')"></head>
+  <body>
+    <script th:inline="javascript">
+      /*<![CDATA[*/
+      var folderId = /*[[${folderId}]]*/'null';
+      var pageType = 'PICTURE';
+      /*]]>*/
+    </script>
+    <header th:include="fragments/header :: topmenu"></header>
+    
+    <main role="main">
+      <div class="container">
+        <div class="row p-2">
+          <nav aria-label="breadcrumb levap_breadcrumb">
+            <ol class="breadcrumb levap_breadcrumb" id="breadcrumbs"></ol>
+          </nav>
+        </div>
+        
+        <div th:if="${folder != null}" class="row">
+          <div class="col text-center">
+            <h3 th:text="${folder.name}" class="p-2 d-inline"></h3>
+            <span th:if="${(folder != null) && (folder.active == false)}" class="material-icons d-inline">delete</span>
+          </div>
+        </div>
+        
+        <div class="row p-2">
+          <div class="col text-center">
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+              <label class="btn btn-secondary active">
+                <input type="radio" name="imageSize" value="1" onclick="handleImageSize(this);" autocomplete="off" />Маленький
+              </label>
+              <label class="btn btn-secondary">
+                <input type="radio" name="imageSize" value="2" onclick="handleImageSize(this);" autocomplete="off" checked />Средний
+              </label>
+              <label class="btn btn-secondary">
+                <input type="radio" name="imageSize" value="3" onclick="handleImageSize(this);" autocomplete="off" />Большой
+              </label>
+            </div>
+            <button sec:authorize="hasRole('ROLE_SUPERADMIN')" onclick="setAsFrontImage();" type="button" class="btn btn-secondary">Установить обложкой</button>
+            <a class="btn btn-primary" data-toggle="collapse" href="#collapseExif" role="button" aria-expanded="false" aria-controls="collapseExif">
+              Информация о снимке
+            </a>
+            <div class="collapse p-2" id="collapseExif">
+              <div class="card card-body">
+                <table class="table table-striped table-dark">
+                  <tbody>
+                    <tr th:each="field : ${folder.parameters}">
+                      <td><strong th:text="${field.name} + ':'"></strong></td>
+                      <td th:text="'&nbsp; &nbsp;' + ${field.value}">&nbsp; &nbsp;</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="container-fluid">
+        <div class="row p-2">
+          <div class="col text-center">
+            <img id="mainpicture" src="" class="img-fluid" alt="" />
+          </div>
+        </div>
+      </div>
+      
+      <div class="container">
+        <div class="row p-2">
+          <div class="col text-center">
+            <div class="btn-toolbar justify-content-between" role="toolbar">
+              <div class="btn-group" role="group" >
+                <a th:if="${(folder != null) && (folder.previousId != null) && (folder.stream == false)}" type="button" class="btn btn-secondary" th:href="'/picture/' + ${folder.previousId}" disabled>Вперед</a>
+                <a th:if="${(folder != null) && (folder.previousId != null) && (folder.stream == true)}" type="button" class="btn btn-secondary" th:href="'/stream/' + ${folder.previousId}" disabled>Вперед</a>
+              </div>
+              <div class="btn-group" role="group">
+                <a th:if="${(folder != null) && (folder.nextId != null) && (folder.stream == false)}" type="button" class="btn btn-secondary" th:href="'/picture/' + ${folder.nextId}" disabled>Назад</a>
+                <a th:if="${(folder != null) && (folder.nextId != null) && (folder.stream == true)}" type="button" class="btn btn-secondary" th:href="'/stream/' + ${folder.nextId}" disabled>Назад</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div th:if="${(folder != null) && (folder.description != null) && (folder.description != '')}" class="row p-2">
+          <div class="col">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Описание фото</h5>
+                <p class="card-text text-left" th:text="${folder.description}"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </main>
+
+    <footer th:replace="fragments/footer :: footer"></footer>
+    
+    <div th:replace="fragments/modals :: add_folder_modal"></div>
+    <div th:replace="fragments/modals :: delete_folder_modal"></div>
+    <div th:replace="fragments/modals :: add_pictures_modal"></div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script th:src="@{/jquery/jquery-3.4.1.min.js}"></script>
+    <script th:src="@{/toastr/toastr.min.js}"></script>
+    <script th:src="@{/bootstrap/js/popper.min.js}"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/bootstrap/js/holder.min.js}"></script>
+    <!-- Custom scripts -->
+    <script th:src="@{/levap/js/common.js}"></script>
+    <script th:src="@{/levap/js/breadcrumbs.js}"></script>
+    <script th:src="@{/levap/js/folder.js}"></script>
+    <script th:src="@{/levap/js/picture.js}"></script>
+  </body>
+</html>

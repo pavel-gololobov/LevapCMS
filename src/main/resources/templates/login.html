@@ -1,0 +1,44 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+  <head th:include="fragments/header :: mainheader ('levap.ru - личная фотогалерея Павла Гололобова','Pavel V. Gololobov (Павел Гололобов) - личная фотогалерея: природа, портрет, репортаж, макро')"></head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+          <div class="card card-signin my-5">
+            <div class="card-body">
+              <h5 class="card-title text-center">Войти</h5>
+              <div th:if="${param.error}">
+                  Неверный логин или пароль
+              </div>
+              <div th:if="${param.logout}">
+                  Вы успешно вышли
+              </div>
+              <form th:action="@{/login}" method="post">
+                <div class="form-group">
+                  <label for="username">Логин</label>
+                  <input type="text" id="username" class="form-control" placeholder="Login" name="username" required autofocus />
+                </div>
+                <div class="form-group">
+                  <label for="password">Пароль</label>
+                  <input type="password" id="password" class="form-control" placeholder="Password" name="password" required />
+                </div>
+                <button class="btn btn-primary" type="submit">Войти</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Bootstrap core JavaScript -->
+    <script th:src="@{/jquery/jquery-3.4.1.min.js}"></script>
+    <script th:src="@{/toastr/toastr.min.js}"></script>
+    <script th:src="@{/bootstrap/js/popper.min.js}"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/bootstrap/js/holder.min.js}"></script>
+    <!-- Custom scripts -->
+    <script th:src="@{/levap/js/common.js}"></script>
+    <script th:src="@{/levap/js/folder.js}"></script>
+  </body>
+</html>

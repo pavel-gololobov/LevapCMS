@@ -1,0 +1,94 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<!-- Modal add folder -->
+<div th:fragment="add_folder_modal" class="modal fade" id="addFolderModal" tabindex="-1" role="dialog" aria-labelledby="addFolderModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form onsubmit="saveFolder(event)">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addFolderModalLabel">Редактирование папки</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+              <label for="folderName">Имя папки</label>
+              <input type="text" class="form-control" id="folderName">
+            </div>
+            <div class="form-group">
+              <label for="folderDescription">Описание</label>
+              <textarea class="form-control" id="folderDescription" rows="3"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="folderPosition">Позиция (0 - первая)</label>
+              <input type="text" class="form-control" id="folderPosition">
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Сохранить</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+          <input type="hidden" id="folderId" />
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal delete folder -->
+<div th:fragment="delete_folder_modal" class="modal fade" id="deleteFolderModal" tabindex="-1" role="dialog" aria-labelledby="deleteFolderModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form onsubmit="deleteFolder(event)">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteFolderModalLabel">Удаление папки</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+              <label for="deleteFolderName">Имя папки</label>
+              <input type="text" class="form-control" id="deleteFolderName" readonly>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Удалить</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+          <input type="hidden" id="deleteFolderId" />
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal upload pictures -->
+<div th:fragment="add_pictures_modal" class="modal fade" id="addPicturesModal" tabindex="-1" role="dialog" aria-labelledby="addPicturesModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addPicturesModalLabel">Загрузка фотографий</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <div id="filelist">Your browser doesn't have Flash, Silverlight or HTML5 support.</div>
+          <br />
+          <div id="filesContainer">
+              <a id="pickfiles" href="javascript:;">[Выбрать файлы]</a> 
+              <a id="uploadfiles" href="javascript:;">[Загрузить файлы]</a>
+          </div>
+          <br />
+          <pre id="console"></pre>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+

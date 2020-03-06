@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head th:fragment="mainheader (title,description)">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" th:content="${description}" content="Pavel V. Gololobov photo gallery">
+  <meta name="author" content="Pavel V. Gololobov">
+  <meta name="_csrf" th:content="${_csrf.token}" />
+  <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+  
+  <link rel="icon" th:href="@{/image/favicon.ico}">
+  <link rel="icon" type="image/png" th:href="@{/image/favicon-192x192.png}" sizes="192x192" />
+  <link rel="icon" type="image/png" th:href="@{/image/favicon-32x32.png}" sizes="32x32" />
+  <link rel="icon" type="image/png" th:href="@{/image/favicon-16x16.png}" sizes="16x16" />
+  
+  <title th:text="${title}"></title>
+  <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+  <link th:href="@{/toastr/toastr.min.css}" rel="stylesheet">
+  <link th:href="@{/levap/css/album.css}" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-26268624-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-26268624-1');
+  </script>
+</head>
+
+<header th:fragment="topmenu">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-darkt">
+    <a href="/" class="navbar-brand d-flex align-items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+      <strong>Альбом фотографий</strong>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/root">Фото по категориям</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://blog.levap.ru">Блог</a>
+        </li>
+        <li class="nav-item" sec:authorize="hasRole('ROLE_SUPERADMIN')">
+          <a class="nav-link" href ="#" data-toggle="modal" data-target="#addFolderModal" onclick="handleAddFolder();">Добавить папку</a>
+        </li>
+        <li class="nav-item" sec:authorize="hasRole('ROLE_SUPERADMIN')">
+          <a class="nav-link" href ="#" data-toggle="modal" data-target="#addPicturesModal">Загрузить фото</a>
+        </li>
+        <li class="nav-item" sec:authorize="hasRole('ROLE_SUPERADMIN')">
+          <a class="nav-link" href ="#" data-toggle="modal" data-target="#addFolderModal" onclick="handleEditFolder(folderId);">Редактировать</a>
+        </li>
+        <li class="nav-item" sec:authorize="hasRole('ROLE_SUPERADMIN')">
+          <a class="nav-link" href ="#" data-toggle="modal" data-target="#deleteFolderModal" onclick="handleDeleteFolder(folderId);">Удалить</a>
+        </li>
+      </ul>
+      <a class="nav-link" sec:authorize="isAnonymous()" href="/login">Войти</a>
+      <a class="nav-link" sec:authorize="isAuthenticated()" href="#" sec:authentication="name"></a>
+      <a class="nav-link" sec:authorize="isAuthenticated()" href="/logout">Выйти</a>
+    </div>
+  </nav>
+</header>

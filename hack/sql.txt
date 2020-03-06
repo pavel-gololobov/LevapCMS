@@ -1,0 +1,7 @@
+createuser levapcms
+CREATE DATABASE levapcms WITH OWNER "levapcms" ENCODING 'UTF8' LC_COLLATE = 'en_US.UTF-8' LC_CTYPE = 'en_US.UTF-8' TEMPLATE = template0;
+alter user levapcms with encrypted password '*****';
+grant all privileges on database levapcms to levapcms;
+
+pg_dump -E UTF-8 -F p -b -f /tmp/levap.sql levapcms
+psql levapcms < /tmp/levap.sql
